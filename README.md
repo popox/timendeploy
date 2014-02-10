@@ -1,13 +1,34 @@
-# GitHub Post Commit Server
+# Timendeploy
 
-This is a template server for using with the github callbacks. Extend it, make
-it your own, enjoy it. I've added a rackup for those of you that would prefer
-to use an evented server for this application. (It's kinda ideal in this case)
+This is a very simple service that receives a post commit payload from GitHub.
 
-Sadly, the way rubygems packs up binaries, I will need some assistance making
-the rackup work from the default binary install path.
+It is configured by branch and does two things:
+- pull the repo on the service machine given by the branch from the commit received by the payload
+- execute ```cap {branch} deploy:migrations```
 
-For more details please see the following guide on GitHub:
-http://help.github.com/post-receive-hooks
 
-And please, take a look at the source, that's what it's there for.
+Configuration
+===
+
+Just create a ```whitelist.yml``` file in the root of the service with this structure:
+
+```yaml
+branch_name: path_to_pull_repo
+...
+```
+
+For example
+```yaml
+master: /www/current/
+preprod: /www/preprod/current/
+acceptance: /www/acceptance/current/
+```
+
+Start
+===
+
+If you have ```thin``` or ```mongrel``` installed you can start the service via respectively ```rake thin``` and ```rake thin```.
+
+If not, you can simply ```rake start``` and it will use ````webrick```
+
+

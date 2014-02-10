@@ -10,6 +10,7 @@
 
 require 'rack'
 require 'json'
+require File.expand_path '../auto_deploy.rb', __FILE__
 
 module GithubPostReceiveServer
   class RackApp
@@ -29,11 +30,11 @@ module GithubPostReceiveServer
 
       return rude_comment if payload.nil?
 
-      puts payload unless $TESTING # remove me!
-
       payload = JSON.parse(payload)
 
-      # ... Your code goes here! ...
+      Deploy.go(payload)
+
+      return rude_comment unless $?.nil? || $?.exitstatus == 0
 
       @res.write THANK_YOU_COMMENT
     end
