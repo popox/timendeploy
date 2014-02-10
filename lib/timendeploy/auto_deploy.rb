@@ -1,6 +1,6 @@
 require 'yaml'
 
-module GithubPostReceiveServer
+module Timendeploy
   class Deploy
 
     WHITE_LIST = YAML.load_file(File.expand_path '../../../whitelist.yml', __FILE__)

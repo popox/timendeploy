@@ -1,6 +1,6 @@
 require 'rubygems/package_task'
 
-spec = Gem::Specification.load('github_post_receive_server.gemspec')
+spec = Gem::Specification.load('timendeploy.gemspec')
 Gem::PackageTask.new spec
 
 desc "run all bacon specs"
@@ -11,12 +11,12 @@ task :test => :spec
 
 desc "start server (main executable)"
 task :start do
-  sh %{bin/github_post_receive_server}
+  sh %{bin/timendeploy}
 end
 
 desc "start server under thin (rackup)"
 task :thin do
-  sh %{thin -R bin/github_post_receive_server.ru -p 9001 start}
+  sh %{thin -R bin/timendeploy.ru -p 9001 start}
 end
 
 desc "remove pkg files"

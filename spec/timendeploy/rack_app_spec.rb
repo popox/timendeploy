@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Rack Post-Receive Server :-P" do 
   before do
-    @server = GithubPostReceiveServer::RackApp.new
+    @server = Timendeploy::RackApp.new
   end
 
   it "should reply with a rude message on GET" do 
