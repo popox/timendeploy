@@ -13,15 +13,26 @@ Configuration
 Just create a ```whitelist.yml``` file in the root of the service with this structure:
 
 ```yaml
-branch_name: path_to_pull_repo
+branch_name:
+  directory: path_to_pull_repo
+  stage: cap_staging_to_use
+  task: cap_task_to_call 
 ...
 ```
 
-For example
+The only mandatory info per branch is the ```directory``` value. By default the ```stage``` value is the ```branch_name``` and the ```task``` is "deploy:migrations".
+
+
+Concrete example:
 ```yaml
-master: /www/current/
-preprod: /www/preprod/current/
-acceptance: /www/acceptance/current/
+master: 
+  directory: /www/current/
+  stage: prod
+  task: deploy
+preprod: 
+  directory: /www/preprod/current/
+acceptance: 
+  directory: /www/acceptance/current/
 ```
 
 Start

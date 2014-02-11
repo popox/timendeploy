@@ -12,9 +12,13 @@ module Timendeploy
       unless branch_match.nil?
         branch = branch_match[1]
         if WHITE_LIST.has_key?(branch)
-          cd WHITE_LIST[branch]
-          git('pull', 'origin', branch)
-          cap('beta', 'deploy:migrations')
+	   branch_config = WHITE_LIST[branch]
+	   wd = branch_config.has_key?('directory') ? branch_config['directory'] : WHITE_LIST[branch]
+           cd wd
+           git('pull', 'origin', branch)
+	   cap_stage = branch_config.has_key?('stage') ? branch_config['stage'] : branch
+	   cap_task = branch_config.has_key?('task') ? branch_config['task'] : 'deploy:migrations'
+           cap(cap_stage, cap_task)
         end
       end
 

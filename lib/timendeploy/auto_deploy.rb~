@@ -1,9 +1,0 @@
-module GithubPostReceiveServer
-  class Deploy
-
-    def self.go(payload) 
-
-    end
-  end
-
-end

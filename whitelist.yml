@@ -1,1 +1,2 @@
-prod: /www
+master: 
+  directory: /www
