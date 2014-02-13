@@ -15,6 +15,8 @@ module Timendeploy
           branch_config = WHITE_LIST[branch]
 	        wd = branch_config.has_key?('directory') ? branch_config['directory'] : WHITE_LIST[branch]
           Dir.chdir(wd){
+            git('checkout', branch)
+            git('fetch', 'origin', branch)
             git('pull', 'origin', branch)
           }
 	        cap_stage = branch_config.has_key?('stage') ? branch_config['stage'] : branch
@@ -37,7 +39,7 @@ module Timendeploy
     def self.cap(stage, task)
       return unless $?.nil? || $?.exitstatus == 0
       puts ">>> Cap #{stage} #{task} in #{`pwd`}"
-      `cap #{stage} #{task}`
+      `export BUNDLE_GEMFILE=#{Dir.pwd}/Gemfile && bundle exec cap #{stage} #{task}`
     end
   end
 end
