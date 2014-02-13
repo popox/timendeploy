@@ -15,9 +15,9 @@ module Timendeploy
           branch_config = WHITE_LIST[branch]
 	        wd = branch_config.has_key?('directory') ? branch_config['directory'] : WHITE_LIST[branch]
           Dir.chdir(wd){
-            git('checkout', branch)
-            git('fetch', 'origin', branch)
-            git('pull', 'origin', branch)
+            git('checkout', {:branch => branch})
+            git('fetch', {:repo => 'origin', :branch => branch})
+            git('pull', {:repo => 'origin', :branch => branch})
           }
 	        cap_stage = branch_config.has_key?('stage') ? branch_config['stage'] : branch
 	        cap_task = branch_config.has_key?('task') ? branch_config['task'] : 'deploy:migrations'
@@ -30,10 +30,16 @@ module Timendeploy
       $?
     end
 
-    def self.git(cmd, repo = 'origin', branch = 'master')
+    def self.git(cmd, opts=nil)
       return unless $?.nil? || $?.exitstatus == 0
-      puts ">>> #{cmd}ing #{branch} from #{repo} in #{`pwd`}"
-      `git #{cmd} #{repo} #{branch}`
+      branch = opts.nil? ? 'master' : opts[:branch]
+      repo = opts.nil? ? 'origin' : opts[:repo]
+      puts ">>> #{cmd}ing #{opts} from #{repo} in #{`pwd`}"
+      if cmd == 'checkout'
+        `git #{cmd} #{branch}`
+      else
+        `git #{cmd} #{repo} #{branch}`
+      end
     end
 
     def self.cap(stage, task)
