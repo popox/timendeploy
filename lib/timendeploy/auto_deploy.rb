@@ -17,6 +17,7 @@ module Timendeploy
           branch_config = WHITE_LIST[branch]
 	        wd = branch_config.has_key?('directory') ? branch_config['directory'] : WHITE_LIST[branch]
           Dir.chdir(wd){
+            git('checkout', {:branch => '.'})
             git('checkout', {:branch => branch})
             git('fetch', {:repo => 'origin', :branch => branch})
             git('pull', {:repo => 'origin', :branch => branch})
