@@ -8,8 +8,14 @@ GEM
   remote: https://rubygems.org/
   specs:
     bacon (1.2.0)
+    daemons (1.1.9)
+    eventmachine (1.0.3)
     rack (1.5.2)
     rake (10.0.3)
+    thin (1.6.1)
+      daemons (>= 1.0.9)
+      eventmachine (>= 1.0.0)
+      rack (>= 1.0.0)
 
 PLATFORMS
   ruby
@@ -17,4 +23,5 @@ PLATFORMS
 DEPENDENCIES
   bacon
   rake
+  thin
   timendeploy!

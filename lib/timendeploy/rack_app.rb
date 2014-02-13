@@ -32,9 +32,9 @@ module Timendeploy
 
       payload = JSON.parse(payload)
 
-      Deploy.go(payload)
+      status = Deploy.go(payload)
 
-      return rude_comment unless $?.nil? || $?.exitstatus == 0
+      return rude_comment unless status.nil? || status.exitstatus == 0
 
       @res.write THANK_YOU_COMMENT
     end
