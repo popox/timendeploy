@@ -8,7 +8,7 @@ module Timendeploy
 
     def self.go(payload) 
       ref_pushed = payload['ref']
-      head_commit_message = payload['head_commit']['message'] if payload.has_key? 'head_commit'
+      head_commit_message = payload['head_commit']['message'] if payload.has_key? 'head_commit' && !payload['head_commit'].nil?
 
       branch_match = ref_pushed.match(/refs\/heads\/([a-z]+)/)
       unless branch_match.nil? || head_commit_message.nil? || !head_commit_message.match(/^#{DEPLOY_MSG}/)
