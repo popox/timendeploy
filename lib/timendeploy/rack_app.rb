@@ -40,7 +40,12 @@ module Timendeploy
     end
 
     # Call is the entry point for all rack apps.
+    # making the code below thread safe by duplicating self on call.
     def call(env)
+      dup._call(env)
+    end
+
+    def _call(env)
       @req = Rack::Request.new(env)
       @res = Rack::Response.new
       handle_request
