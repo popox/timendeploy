@@ -6,11 +6,13 @@ module Timendeploy
     WHITE_LIST = YAML.load_file(File.expand_path '../../../whitelist.yml', __FILE__)
     DEPLOY_MSG = 'Merge'
 
-    def self.go(payload) 
+    def self.go(payload)
       ref_pushed = payload['ref']
-      head_commit_message = payload['head_commit']['message'] if payload.has_key? 'head_commit' && !payload['head_commit'].nil?
+
+      head_commit_message = payload['head_commit']['message'] if payload.has_key?('head_commit') && !payload['head_commit'].nil?
 
       branch_match = ref_pushed.match(/refs\/heads\/([a-z]+)/)
+
       unless branch_match.nil? || head_commit_message.nil? || !head_commit_message.match(/^#{DEPLOY_MSG}/)
         branch = branch_match[1]
         if WHITE_LIST.has_key?(branch)
