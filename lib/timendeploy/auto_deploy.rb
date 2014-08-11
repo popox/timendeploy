@@ -12,6 +12,8 @@ module Timendeploy
       head_commit_message = payload['head_commit']['message'] if payload.has_key?('head_commit') && !payload['head_commit'].nil?
 
       branch_match = ref_pushed.match(/refs\/heads\/([a-z]+)/)
+      
+      puts ">> Received hook for branch: #{branch_match} with head commit: #{head_commit_message}"
 
       unless branch_match.nil? || head_commit_message.nil? || !head_commit_message.match(/^#{DEPLOY_MSG}/)
         branch = branch_match[1]
